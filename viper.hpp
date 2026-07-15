@@ -1,10 +1,11 @@
-/* viper.hpp - v0.5.0 */
+/* viper.hpp - v0.5.1 */
 /* 
  * A simple and lean command line parser
  * inspired from [cobra](https://github.com/spf13/cobra)
  */
 
 /*
+ * 15 July 2026: v0.5.1 - fix `AnyOf` validators
  * 14 July 2026: v0.5.0 - initial release
  */
 
@@ -193,16 +194,14 @@ inline FlagValidator AnyOf(std::vector<FlagValidator> validators)
         std::string last;
         for (auto& validator : validators)
         {
-            if (auto err = validator(v))
+            auto err = validator(v);
+            if (!err)
             {
-                last = *err;
+                return std::nullopt;
             }
+            last = *err;
         }
-        if (!last.empty())
-        {
-            return last;
-        }
-        return std::nullopt;
+        return last;
     };
 }
 //
@@ -612,16 +611,14 @@ inline ArgValidator AnyOf(std::vector<ArgValidator> validators)
         std::string last;
         for (auto& validator : validators)
         {
-            if (auto err = validator(count))
+            auto err = validator(count);
+            if (!err)
             {
-                last = *err;
+                return std::nullopt;
             }
+            last = *err;
         }
-        if (!last.empty())
-        {
-            return last;
-        }
-        return std::nullopt;
+        return last;
     };
 }
 
