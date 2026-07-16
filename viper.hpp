@@ -1,10 +1,11 @@
-/* viper.hpp - v0.5.1 */
+/* viper.hpp - v0.5.2 */
 /* 
  * A simple and lean command line parser
  * inspired from [cobra](https://github.com/spf13/cobra)
  */
 
 /*
+ * 16 July 2026: v0.5.2 - fix multiple definition error for `g_ConfigErrors`
  * 15 July 2026: v0.5.1 - fix `AnyOf` validators
  * 14 July 2026: v0.5.0 - initial release
  */
@@ -46,7 +47,7 @@ struct ConfigError
     }
 };
 
-std::vector<ConfigError> g_ConfigErrors;
+static std::vector<ConfigError> g_ConfigErrors;
 
 
 /*====================================================*/
